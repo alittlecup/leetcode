@@ -14,14 +14,35 @@ import java.util.Arrays;
  * nums2 = [2,5,6],       n = 3
  *
  * 输出: [1,2,2,3,5,6]
- * 思路
+ * 思路 遍历num1集合，如果比num2中的数大 则将num2中的数放置到对应的问题，然后将num1中的数据向后移动一个位置
+ *
+ * 官方思路，倒着进行对比，如果num1中的末尾比num2中的末尾大，则在num1中最后的位置放置num1的数据，否者放置num2中的数据
  */
 class LeetCode88 {
   public static void main(String[] args) {
     int[] num1 = new int[] { -1, 3, 0, 0, 0, 0, 0 };//-1,0,0,2,3,0,0,0
     int[] num2 = new int[] { 0, 0, 1, 2, 3 };     //1,2,2
-    merge(num1, 2, num2, 5);
+    merge2(num1, 2, num2, 5);
     System.out.println(Arrays.toString(num1));
+  }
+
+  public static void merge2(int[] nums1, int m, int[] nums2, int n) {
+    int mLast = m - 1;
+    int nLast = n - 1;
+    int kLast = n + m - 1;
+    while (mLast >= 0 && nLast >= 0) {
+      if (nums1[mLast] > nums2[nLast]) {
+        nums1[kLast--] = nums1[mLast--];
+      } else {
+        nums1[kLast--] = nums2[nLast--];
+      }
+    }
+    while (mLast >= 0) {
+      nums1[kLast--] = nums1[mLast--];
+    }
+    while (nLast >= 0) {
+      nums1[kLast--] = nums2[nLast--];
+    }
   }
 
   public static void merge(int[] nums1, int m, int[] nums2, int n) {
